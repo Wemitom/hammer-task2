@@ -2,28 +2,19 @@ import { Circle, Rect, Group } from 'react-konva';
 import PropTypes from 'prop-types';
 import { GRID_SIZE } from '../../../constants';
 
-const TableFourChairs = ({ onDragEnd }) => {
-  const tableWidth = GRID_SIZE * 6;
+const TableTwoChairs = ({ onDragEnd }) => {
+  const tableWidth = GRID_SIZE * 4;
   const tableHeight = GRID_SIZE * 3;
   const chairRadius = GRID_SIZE;
-  const chairSpacingX = 0;
   const chairSpacingY = GRID_SIZE;
 
   const chairPositions = [
     {
-      x: chairRadius - chairSpacingX,
+      x: 2 * chairRadius,
       y: tableHeight + chairRadius + chairSpacingY,
     },
     {
-      x: tableWidth - chairRadius - chairSpacingX,
-      y: tableHeight + chairRadius + chairSpacingY,
-    },
-    {
-      x: chairRadius - chairSpacingX,
-      y: chairRadius - tableHeight,
-    },
-    {
-      x: tableWidth - chairRadius - chairSpacingX,
+      x: 2 * chairRadius,
       y: chairRadius - tableHeight,
     },
   ];
@@ -49,10 +40,10 @@ const TableFourChairs = ({ onDragEnd }) => {
   );
 };
 
-TableFourChairs.propTypes = {
+TableTwoChairs.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
   onDragEnd: PropTypes.func.isRequired,
 };
 
-export default TableFourChairs;
+export default TableTwoChairs;
