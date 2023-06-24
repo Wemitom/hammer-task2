@@ -1,8 +1,9 @@
-import { Circle, Group } from 'react-konva';
 import PropTypes from 'prop-types';
+import { Circle, Group } from 'react-konva';
+
 import { GRID_SIZE } from '../../../constants';
 
-const CircleThreeChairs = ({ x, y, onDragEnd }) => {
+const CircleThreeChairs = ({ x, y, rotation, onDragEnd, onClick }) => {
   const tableRadius = GRID_SIZE * 2;
   const chairRadius = GRID_SIZE;
   const chairSpacingY = GRID_SIZE;
@@ -26,8 +27,10 @@ const CircleThreeChairs = ({ x, y, onDragEnd }) => {
     <Group
       draggable
       onDragEnd={onDragEnd}
+      onClick={onClick}
       x={x || tableRadius + chairRadius * 2}
       y={y || tableRadius + chairRadius}
+      rotation={rotation}
     >
       <Circle radius={tableRadius} fill="#fff" />
       {chairPositions.map(({ x, y }) => (
@@ -46,7 +49,9 @@ const CircleThreeChairs = ({ x, y, onDragEnd }) => {
 CircleThreeChairs.propTypes = {
   x: PropTypes.number,
   y: PropTypes.number,
+  rotation: PropTypes.number,
   onDragEnd: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default CircleThreeChairs;

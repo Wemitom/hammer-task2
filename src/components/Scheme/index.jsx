@@ -4,13 +4,20 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { GRID_COUNT, GRID_SIZE } from '../../constants';
 import { updateObject } from '../../store/objectsSlice';
-import { TableFourChairs, TableTwoChairs, CircleThreeChairs } from '../objects';
+import {
+  TableFourChairs,
+  TableTwoChairs,
+  CircleThreeChairs,
+  Wall,
+} from '../objects';
 
-const Scheme = () => {
+const Scheme = ({ setLastSelected }) => {
   const objects = useSelector((state) => state.objects);
   const dispatcher = useDispatch();
 
   const handleDragEnd = (e, i) => {
+    setLastSelected(i);
+
     const xRelativeToGrid = e.target.x() % GRID_SIZE;
     const yRelativeToGrid = e.target.y() % GRID_SIZE;
 
@@ -42,6 +49,14 @@ const Scheme = () => {
         return <TableTwoChairs {...props} />;
       case 2:
         return <CircleThreeChairs {...props} />;
+      case 3:
+        return <Wall size={1} {...props} />;
+      case 4:
+        return <Wall size={2} {...props} />;
+      case 5:
+        return <Wall size={5} {...props} />;
+      case 6:
+        return <Wall size={6} {...props} />;
       default:
         return null;
     }
@@ -75,8 +90,10 @@ const Scheme = () => {
           getObject(object.id, {
             key: i,
             onDragEnd: (e) => handleDragEnd(e, i),
+            onClick: () => setLastSelected(i),
             x: object.x,
             y: object.y,
+            rotation: object.rotation,
           })
         )}
       </Layer>
@@ -85,7 +102,7 @@ const Scheme = () => {
 };
 
 Scheme.propTypes = {
-  objects: PropTypes.arrayOf(PropTypes.object),
+  setLastSelected: PropTypes.func.isRequired,
 };
 
 export default Scheme;

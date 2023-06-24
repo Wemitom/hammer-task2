@@ -1,5 +1,6 @@
+import CircleThreeChairs from './CircleThreeChairs';
 import TableFourChairs from './TableFourChairs';
 import TableTwoChairs from './TableTwoChairs';
-import CircleThreeChairs from './CircleThreeChairs';
+import Wall from './Wall';
 
-export { TableFourChairs, TableTwoChairs, CircleThreeChairs };
+export { TableFourChairs, TableTwoChairs, CircleThreeChairs, Wall };
