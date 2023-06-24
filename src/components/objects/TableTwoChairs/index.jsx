@@ -2,7 +2,7 @@ import { Circle, Rect, Group } from 'react-konva';
 import PropTypes from 'prop-types';
 import { GRID_SIZE } from '../../../constants';
 
-const TableTwoChairs = ({ onDragEnd }) => {
+const TableTwoChairs = ({ x, y, onDragEnd }) => {
   const tableWidth = GRID_SIZE * 4;
   const tableHeight = GRID_SIZE * 3;
   const chairRadius = GRID_SIZE;
@@ -23,8 +23,8 @@ const TableTwoChairs = ({ onDragEnd }) => {
     <Group
       draggable
       onDragEnd={onDragEnd}
-      x={0}
-      y={chairRadius * 2 + chairSpacingY}
+      x={x || 0}
+      y={y || chairRadius * 2 + chairSpacingY}
     >
       <Rect width={tableWidth} height={tableHeight} fill="#fff" />
       {chairPositions.map(({ x, y }) => (

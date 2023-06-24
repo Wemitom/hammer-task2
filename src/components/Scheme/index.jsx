@@ -1,13 +1,14 @@
-import { useState } from 'react';
-import { Stage, Layer, Rect } from 'react-konva';
-import { GRID_COUNT, GRID_SIZE } from '../../constants';
-import { TableFourChairs, TableTwoChairs } from '../objects';
 import PropTypes from 'prop-types';
-import { useEffect } from 'react';
+import { Stage, Layer, Rect } from 'react-konva';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Scheme = ({ objects }) => {
-  const [positions, setPositions] = useState([]);
-  console.log(positions);
+import { GRID_COUNT, GRID_SIZE } from '../../constants';
+import { updateObject } from '../../store/objectsSlice';
+import { TableFourChairs, TableTwoChairs, CircleThreeChairs } from '../objects';
+
+const Scheme = () => {
+  const objects = useSelector((state) => state.objects);
+  const dispatcher = useDispatch();
 
   const handleDragEnd = (e, i) => {
     const xRelativeToGrid = e.target.x() % GRID_SIZE;
@@ -28,31 +29,19 @@ const Scheme = ({ objects }) => {
     e.target.x(x);
     e.target.y(y);
 
-    setPositions(
-      positions.map((pos, ind) => {
-        if (ind === i)
-          return {
-            ...pos,
-            x: x,
-            y: y,
-          };
-        else return pos;
-      })
-    );
+    dispatcher(updateObject({ i, x, y }));
 
     e.target.getLayer().batchDraw();
   };
 
-  useEffect(() => {
-    objects.length && setPositions((pos) => [...pos, { x: 0, y: 0 }]);
-  }, [objects]);
-
-  const getObject = (type, props) => {
-    switch (type) {
-      case 'table-four-chairs':
+  const getObject = (id, props) => {
+    switch (id) {
+      case 0:
         return <TableFourChairs {...props} />;
-      case 'table-two-chairs':
+      case 1:
         return <TableTwoChairs {...props} />;
+      case 2:
+        return <CircleThreeChairs {...props} />;
       default:
         return null;
     }
@@ -83,9 +72,11 @@ const Scheme = ({ objects }) => {
         ))}
 
         {objects.map((object, i) =>
-          getObject(object.type, {
+          getObject(object.id, {
             key: i,
             onDragEnd: (e) => handleDragEnd(e, i),
+            x: object.x,
+            y: object.y,
           })
         )}
       </Layer>
