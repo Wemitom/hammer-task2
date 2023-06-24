@@ -41,11 +41,14 @@ const Dropzone = ({ setScheme }) => {
   return (
     <div {...getRootProps()}>
       <input {...getInputProps()} />
-      {isDragActive ? (
-        <p>Drop the files here ...</p>
-      ) : (
-        <p>Drag 'n' drop some files here, or click to select files</p>
-      )}
+      <div className="dropzone">
+        <span className="dropzone__icon">+</span>
+        {isDragActive ? (
+          <p>Перетащите файл</p>
+        ) : (
+          <p>Выберите файлы для импорта или перетащите его в эту область</p>
+        )}
+      </div>
     </div>
   );
 };
@@ -77,9 +80,10 @@ const ImportModal = ({ open, handleClose }) => {
           Импорт схемы
         </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          Выберите файл для импорта
+          {scheme ? 'Схема загружена' : 'Выберите файл для импорта'}
         </Typography>
-        <Dropzone setScheme={setScheme} />
+
+        {!scheme && <Dropzone setScheme={setScheme} />}
 
         <Stack justifyContent="center">
           <Button
